@@ -1,22 +1,30 @@
 fn main() {
 
-    /* Option type : Something or Nothing */
-    let mut word: String = "Hello, World".to_string();
-    for _i in 0..13{/*Recommend use len() method: word.len() */
-        match word.pop() {/* pop(): Removes the last character from the string buffer and returns it. */
-            Some(c) => println!("{}", c),
-            None => println!("String is empty"),
-        }
+    //what is Vector? -> resizable array
+
+    let v0:Vec<u8> = Vec::new();
+    let mut v1 = vec![0, 1, 2];
+    let v2 = vec![1; 3];
+
+    println!("length v0:{}, v1:{}, v2:{}", v0.len(), v1.len(), v2.len());
+
+    v1.push(3);//Append value to end of vector
+
+    for i in 0..v1.len(){
+        println!("v1[{}] = {}", i, v1[i]);
+    }
+    v1.pop();//pop values from end of vector
+
+    for (i, el) in v1.iter().enumerate(){
+        println!("v1[{}] = {}", i, el);
     }
 
-    /* Result type : Success(Ok) or failure(Err)*/
-    let four: &str = "4";
-    match four.parse::<u8>() {
-        Ok(n) => println!("parse success: {}", n),
-        Err(err) => println!("{:?}", err),
-    }
-    /* or 
-        let num = four.parse::<u8>().unwrap()
-        (if "four" is not number string, unwrap() return "panic" and finish program with error message)
-     */
+    /*other usage
+        for el in v1 {
+            println!("v1={}", el);
+        }
+        for el in v1.iter(){
+            println!("v1={}", el)
+        }
+    */
 }
