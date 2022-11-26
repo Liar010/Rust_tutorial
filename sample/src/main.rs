@@ -1,30 +1,61 @@
 fn main() {
 
-    //what is Vector? -> resizable array
+    //function
 
-    let v0:Vec<u8> = Vec::new();
-    let mut v1 = vec![0, 1, 2];
-    let v2 = vec![1; 3];
+    //simply function
+    print_hello();
+    print_add(1u8, 2u8);
+    println!("add: {}", add(1u8, 2u8));
 
-    println!("length v0:{}, v1:{}, v2:{}", v0.len(), v1.len(), v2.len());
+    let v1 = vec![1; 3];
+    println!("sum_vec: {}", sum_vec(v1));
 
-    v1.push(3);//Append value to end of vector
+    //function in struct in Vector. functional pointer?
+    //better to use enum impl. maybe.
+    calc_fn(Calc::ADD, 1, 2);
+    calc_fn(Calc::MULTI, 2, 2);
+}
 
-    for i in 0..v1.len(){
-        println!("v1[{}] = {}", i, v1[i]);
+fn print_hello(){
+    println!("Hello")
+}
+
+fn print_add(x: u8, y: u8){
+    println!("x + y = {}", x + y)
+}
+
+fn add(x: u8, y: u8) -> u8{
+    return x + y
+}
+fn multi(x: u8, y: u8) -> u8{
+    return x * y
+}
+
+fn sum_vec(v: Vec<u8>) -> u8{
+    let mut sum = 0;
+    for i in v{
+        sum += i;
     }
-    v1.pop();//pop values from end of vector
+    return sum
+}
 
-    for (i, el) in v1.iter().enumerate(){
-        println!("v1[{}] = {}", i, el);
+#[derive(PartialEq)]
+enum Calc{
+    ADD,
+    MULTI,
+}
+struct CalcT{
+    c:Calc,
+    f: fn(u8, u8)->u8,
+}
+fn calc_fn(c: Calc, x:u8, y:u8){
+    let calclation =
+        vec![CalcT{c: Calc::ADD, f: add},
+            CalcT{c: Calc::MULTI, f: multi}];
+
+    for i in 0..calclation.len(){
+        if c == calclation[i].c {
+            println!("{}", (calclation[i].f)(x, y))
+        }
     }
-
-    /*other usage
-        for el in v1 {
-            println!("v1={}", el);
-        }
-        for el in v1.iter(){
-            println!("v1={}", el)
-        }
-    */
 }
